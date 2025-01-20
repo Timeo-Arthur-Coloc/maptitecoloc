@@ -11,7 +11,7 @@ export class UserEntity {
   @Column({ length: 50 })
   lastname: string;
 
-  @Column({ type: Date })
+  @Column()
   birthdate: string;
 
   @Column({ unique: true })

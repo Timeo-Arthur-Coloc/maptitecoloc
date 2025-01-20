@@ -20,6 +20,7 @@ app.use("/api/users", userRoutes); // Routes pour les utilisateurs
 
 // Middleware de gestion des erreurs (à vous de le personnaliser pour qu'il soit réutilisable, pensez aux classes d'erreurs)
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.log(err);
   if (err instanceof AppError) {
     res.status(err.statusCode).json({
       statusCode: err.statusCode,

@@ -9,7 +9,6 @@ const userService = new UserService();
 
 export const registerUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    console.log(req.body.birthdate)
     const userToCreateDTO = plainToInstance(UserToCreateDTO, req.body, { excludeExtraneousValues: true });
 
     const dtoErrors = await validate(userToCreateDTO);

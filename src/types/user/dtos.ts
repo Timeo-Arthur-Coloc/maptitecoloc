@@ -1,6 +1,6 @@
 import { Expose } from "class-transformer";
 import { UserEntity } from "../../databases/mysql/user.entity";
-import { IsString } from "class-validator";
+import { IsDate, isDate, IsString } from "class-validator";
 
 export class UserToCreateDTO {
   @Expose()

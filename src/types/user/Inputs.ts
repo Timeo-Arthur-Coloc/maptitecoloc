@@ -1,5 +1,5 @@
 import { Expose } from "class-transformer";
-import { IsString } from "class-validator";
+import { IsDate, IsString } from "class-validator";
 import { UserEntity } from "../../databases/mysql/user.entity";
 
 export class userToCreateInput {
@@ -10,6 +10,10 @@ export class userToCreateInput {
   @Expose()
   @IsString()
   lastname: UserEntity['lastname'];
+
+  @Expose()
+  @IsString()
+  birthdate: UserEntity['birthdate'];
 
   @Expose()
   @IsString()

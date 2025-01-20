@@ -1,5 +1,5 @@
 import { Expose } from "class-transformer";
-import { IsNumber, IsString } from "class-validator";
+import { IsDate, IsNumber, IsString } from "class-validator";
 import { UserEntity } from "../../databases/mysql/user.entity";
 
 export class UserPresenter {
@@ -14,6 +14,10 @@ export class UserPresenter {
   @Expose()
   @IsString()
   lastname: UserEntity['lastname'];
+
+  @Expose()
+  @IsString()
+  birthdate: UserEntity['birthdate'];
 
   @Expose()
   @IsString()
