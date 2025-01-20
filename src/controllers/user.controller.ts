@@ -9,14 +9,15 @@ const userService = new UserService();
 
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
   try {
-   const userToCreateDTO = plainToInstance(UserToCreateDTO, req.body, { excludeExtraneousValues: true });
+    console.log(req.body.birthdate)
+    const userToCreateDTO = plainToInstance(UserToCreateDTO, req.body, { excludeExtraneousValues: true });
 
-   const dtoErrors = await validate(userToCreateDTO);
-   if (dtoErrors.length > 0) {
-     console.log(dtoErrors);
-     throw new Error("Invalid fields");
-   }
-    
+    const dtoErrors = await validate(userToCreateDTO);
+    if (dtoErrors.length > 0) {
+      console.log(dtoErrors);
+      throw new Error("Invalid fields");
+    }
+
     const user = await userService.registerUser(req.body);
     // appeler le logger service pour enregistrer QUI a créer un utilisateur (peut être un admin ou l'utilisateur lui même (?)  )
 

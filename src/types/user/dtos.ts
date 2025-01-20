@@ -13,6 +13,10 @@ export class UserToCreateDTO {
 
   @Expose()
   @IsString()
+  birthdate: UserEntity['birthdate'];
+
+  @Expose()
+  @IsString()
   email: UserEntity['email'];
 
   @Expose()
