@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { UserService } from "../services/user.service";
 import { UserToCreateDTO } from "../types/user/dtos";
 import { plainToInstance } from "class-transformer";
@@ -7,7 +7,7 @@ import { UserPresenter } from "../types/user/presenters";
 
 const userService = new UserService();
 
-export const registerUser = async (req: Request, res: Response): Promise<void> => {
+export const registerUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     console.log(req.body.birthdate)
     const userToCreateDTO = plainToInstance(UserToCreateDTO, req.body, { excludeExtraneousValues: true });
@@ -24,6 +24,6 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
     const createdUser = plainToInstance(UserPresenter, user, { excludeExtraneousValues: true });
     res.status(201).json(createdUser); // à vous de créer une class pour gérer les success
   } catch (error) {
-    throw error;
+    next(error);
   }
 };

@@ -2,6 +2,7 @@ import { UserEntity } from "../databases/mysql/user.entity";
 import { UserRepository } from "../repositories/user.repository";
 import { UserToCreateDTO } from "../types/user/dtos";
 import { EmailService } from "../services/email.service";
+import { AppError } from "../utils/error.utils";
 import * as bcrypt from 'bcryptjs';
 
 export class UserService {
@@ -12,7 +13,7 @@ export class UserService {
     // ON CHECK SI L'UTILISATEUR EXISTE DÉJÀ DANS LE REPOSITORY
     const existingUser = await this.userRepository.findByEmail(userToCreate.email);
     if (existingUser) {
-      throw new Error('User already exists');
+      throw new AppError(409, 'USER_ALREADY_EXISTS', 'User with this email already exists');
     }
 
     // ON HASH LE MOT DE PASSE
