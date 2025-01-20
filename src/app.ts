@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import userRoutes from "./routes/user/user.routes";
+import { AppError } from "./utils/error.utils";
 
 const app = express();
 
@@ -19,14 +20,25 @@ app.use("/api/users", userRoutes); // Routes pour les utilisateurs
 
 // Middleware de gestion des erreurs (à vous de le personnaliser pour qu'il soit réutilisable, pensez aux classes d'erreurs)
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-  console.log(err);
-  
-  const statusCode = err.statusCode || 500;
-  res.status(statusCode).json({
-    statusCode,
-    errorCode: err.code || "INTERNAL_SERVER_ERROR",
-    message: err.message || "An unexpected error occurred",
-  });
+  if (err instanceof AppError) {
+    res.status(err.statusCode).json({
+      statusCode: err.statusCode,
+      errorCode: err.errorCode,
+      message: err.message,
+      method: req.method,
+      path: req.path,
+      timestamp: err.timestamp,
+    });
+  } else {
+    res.status(500).json({
+      statusCode: 500,
+      errorCode: "INTERNAL_SERVER_ERROR",
+      message: "An unexpected error occurred",
+      method: req.method,
+      path: req.path,
+      timestamp: new Date().toISOString(),
+    });
+  }
 });
 
 export default app;
