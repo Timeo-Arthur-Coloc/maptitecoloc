@@ -19,4 +19,8 @@ export class UserRepository {
   async save(user: UserEntity): Promise<UserEntity> {
     return this.userDB.save(user);
   }
+
+  findByEmail(email: string): Promise<UserEntity | null> {
+    return this.userDB.findOne({ where: { email } });
+  }
 }
